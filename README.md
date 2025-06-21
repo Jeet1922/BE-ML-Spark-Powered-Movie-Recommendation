@@ -30,7 +30,6 @@ A real-world, production-ready movie recommendation pipeline built using **Apach
 ├── export.py          # Final export with selected columns for analysis
 ├── main.py            # Orchestrates all steps in order
 ├── session.py         # Manages Spark session
-├── complete_project.ipynb  # Full pipeline notebook (for Google Colab)
 └── README.md
 ```
 
