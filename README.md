@@ -1,3 +1,139 @@
+# 🎮 Movie Recommendation System (with Apache Spark & PySpark)
+
+A real-world, production-ready movie recommendation pipeline built using **Apache Spark**, modularized into Python scripts for scalability and daily execution. This project processes large-scale user behavior data (watch history, ratings, search logs), performs feature engineering, and generates personalized movie recommendations for users.
+
+---
+
+## 🚀 Features
+
+* 📅 **Ingestion** of raw data from CSVs (users, movies, ratings, watch history, search logs)
+* 🧹 **Data cleaning** with handling of duplicates and nulls
+* 🔍 **Feature engineering** including:
+
+  * Primary genre extraction
+  * User-level movie watch count
+  * User average rating & rating deviation
+* 🎯 **Recommendation generation** using collaborative filtering
+* 📊 **Export** of enriched, recommendation-ready dataset for BI tools like Power BI
+* 🔄 **Modular architecture** designed for automation and daily runs
+* 🧪 **Notebook-friendly**: Includes full pipeline in Google Colab notebook for exploratory runs
+
+---
+
+## 📁 Project Structure
+
+```bash
+.
+├── ingest.py          # Ingests raw CSV files using Spark
+├── transform.py       # Cleans data and performs feature engineering
+├── recommend.py       # Builds and applies the recommendation model
+├── export.py          # Final export with selected columns for analysis
+├── main.py            # Orchestrates all steps in order
+├── session.py         # Manages Spark session
+├── complete_project.ipynb  # Full pipeline notebook (for Google Colab)
+└── README.md
+```
+
+---
+
+## 🛠 Requirements
+
+* Python 3.7+
+* Apache Spark with PySpark
+* Google Colab (for notebook use)
+
+---
+
+## 📦 Installation & Setup
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/movie-recommender-spark.git
+cd movie-recommender-spark
+```
+
+### 2. Install Dependencies
+
+If you're running locally (not Colab), install PySpark:
+
+```bash
+pip install pyspark
+```
+
+---
+
+## 📊 Input Data Files
+
+Place your input CSVs in the `/content/` directory (this is the path used in the scripts):
+
+* `users.csv`
+* `movies.csv`
+* `ratings.csv`
+* `watch_history.csv`
+* `search_logs.csv`
+
+If you're running on Google Colab, upload the files manually or mount Google Drive.
+
+---
+
+## ▶️ Running the Pipeline
+
+### Option 1: Run Entire Pipeline via Script
+
+```bash
+python main.py
+```
+
+This will sequentially:
+
+* Ingest data
+* Clean and transform it
+* Generate recommendations
+* Export the final dataset to `/content/output/`
+
+### Option 2: Explore in Google Colab
+
+> 💡 This project was **originally developed in Google Colab**. If you wish to experiment in a notebook-style format, use the included notebook.
+
+Open [`complete_project.ipynb`](complete_project.ipynb) in [Google Colab](https://colab.research.google.com/), and ensure all data is available in `/content/`.
+
+---
+
+## 📤 Output
+
+After running the pipeline:
+
+* Cleaned CSVs are saved to `/content/cleaned/`
+* Engineered features are saved to `/content/features/`
+* Final export is saved to `/content/output/final_recommendations.csv`
+
+These files are ideal for use in tools like Power BI, Tableau, or any analytics engine.
+
+---
+
+## 🧠 Model Details
+
+* **Collaborative Filtering** using Spark’s `ALS` (Alternating Least Squares)
+* Predictions are merged with metadata for user interpretability
+* Recommendation quality can be improved further with hyperparameter tuning or hybrid approaches
+
+---
+
+## 📌 Notes
+
+* Paths are hardcoded for Colab (`/content/`). If running locally, update paths accordingly.
+* For large-scale production deployment, you can integrate these scripts with Airflow or cron jobs.
+* Spark session creation is modularized via `session.py` for reusability.
+
+---
+
+## ❤️ Contributing
+
+Have ideas or suggestions? Pull requests are welcome!
+
+---
+
 # Apache Spark
 
 This repository contains a complete setup to run Apache Spark in Google Colab, allowing you to explore distributed data processing, analytics, and transformations without needing a Spark cluster locally.
@@ -124,90 +260,3 @@ Feel free to fork, clone, and contribute to this notebook by adding new datasets
 Created with ❤️ by \[Your Name]
 
 If you found this helpful, ⭐ the repo and share it with fellow data enthusiasts!
-
-
--------------------------------------------------------
-PROJECT DETAILS:
--------------------------------------------------------
-🏗️ Step 1: Project Architecture Overview
-Here’s the full architecture layout for the project:
-
-📦 Modules:
-Data Ingestion Layer (CSV files / databases / APIs)
-
-Spark Data Processing Layer (ETL)
-
-Feature Engineering Layer (user behavior, ratings, watch history)
-
-Modeling Layer (recommendation algorithm - collaborative filtering via ALS)
-
-Data Storage Layer (final transformed tables for visualization)
-
-BI Layer (Power BI or a React/Flask dashboard for visualization)
-
-📁 Step 2: Directory & File Structure
-cpp
-Copy
-Edit
-netflix-recommendation-spark/
-├── data/
-│   ├── users.csv
-│   ├── movies.csv
-│   ├── ratings.csv
-│   ├── watch_history.csv
-│   └── search_logs.csv
-├── notebooks/
-│   ├── 01_ingest_data.ipynb
-│   ├── 02_data_cleaning.ipynb
-│   ├── 03_feature_engineering.ipynb
-│   ├── 04_model_training.ipynb
-│   ├── 05_data_model_export.ipynb
-│   └── 06_dashboard_integration.ipynb
-├── scripts/
-│   ├── ingest.py
-│   ├── transform.py
-│   ├── recommend.py
-│   └── export.py
-├── README.md
-└── requirements.txt
-🧾 Step 3: Tables Required (CSV or Mock DB)
-Table Name	Description
-users.csv	Basic user details (id, name, age, location, etc.)
-movies.csv	Movie details (id, title, genre, release year, etc.)
-ratings.csv	User ratings (user_id, movie_id, rating, timestamp)
-watch_history.csv	Timestamps when users watched movies (user_id, movie_id, watch_time)
-search_logs.csv	What users searched for (user_id, keyword, timestamp)
-
-🔧 Step 4: Spark Data Manipulation Tasks
-Module	Tasks
-Ingestion	Read multiple CSVs, merge schema, handle corrupt records
-Cleaning	Null value handling, deduplication, data type casting
-Feature Engineering	Average rating per user/movie, watch frequency, search trends, genre preferences
-Model Training	Use ALS (Alternating Least Squares) for collaborative filtering
-Export	Store results in Parquet or CSV format for Power BI or API access
-
-📊 Step 5: Data Model for Power BI
-Table	Purpose
-final_user_features.parquet	User-level embeddings & features
-final_movie_features.parquet	Movie-level embeddings & genre vectors
-recommendations.parquet	Top-N movie recommendations for each user
-aggregated_insights.csv	Summary stats (avg ratings, most watched genres, etc.)
-
-💻 Optional: Frontend Integration (Instead of Power BI)
-You can expose:
-
-/get-recommendations?user_id=123 – through a REST API (Flask/FastAPI)
-
-Frontend (React) pulls recommendations and renders them in a clean UI
-
-✅ Tools Used
-Purpose	Tool
-Data Processing	Apache Spark with PySpark
-Notebook Development	Google Colab
-Storage	CSV/Parquet
-Modeling	ALS from Spark MLlib
-Dashboard	Power BI or React + Flask
-Data Visualization	Matplotlib (optional), Power BI
-Ingestion Automation	Scheduled Notebooks/Scripts
-
-
